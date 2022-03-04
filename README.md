@@ -2,6 +2,18 @@
 
 ## Modifications
 
+TLDR; [0x6F946defCEEa54711eFF5b589961Ee21D59a9CBa](https://rinkeby.etherscan.io/address/0x6F946defCEEa54711eFF5b589961Ee21D59a9CBa)
+
+* Under contract, Read contract
+* Enter any amount of tokens
+* Enter one of the following:
+    * _ONE_THOUSAND_DAYS = 8640000;
+    * _TWO_HUNDRED_FIFTY_DAYS = 21600000;
+    * _ONE_HUNDRED_DAYS = 8640000;
+    * _TWENTY_FIVE_DAYS = 2160000;
+    * _TEN_DAYS = 864000;
+* Get IPFS URL, Profit
+
 ### Environment
 
 The following are required per the blockchain you intend to interact with.

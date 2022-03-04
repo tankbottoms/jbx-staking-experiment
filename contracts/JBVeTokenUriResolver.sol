@@ -35,11 +35,10 @@ contract JBVeTokenUriResolver {
     if (_duration <= 0) {
       revert INVALID_DURATION();
     }
-
-    for (uint16 i = 59; i >= 0; i -= 1) {
-      uint32 maxAmount = uint32((i + 1) * 1000 + uint256(14 ether**i).div(10 ether));
+    for (uint256 i = 59; i >= 0; i -= 1) {
+      uint256 maxAmount = uint256(i + 1) * 1000 + (uint256(14 ether).div(10 ether)**i);
       if (_amount <= maxAmount) {
-        for (uint8 j = uint8(_DURATIONS.length - 1); j >= 0; j -= 1) {
+        for (uint256 j = uint256(_DURATIONS.length - 1); j >= 0; j -= 1) {
           if (_DURATIONS[j] == _duration) {
             return string(abi.encodePacked('ipfs://QmZ95SaBa3VWb2X7o9bPniWKYBQ2uCnjBmhSUhLq7orjRS/', Strings.toString(i * 5 + j)));
           }

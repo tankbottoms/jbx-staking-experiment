@@ -35,17 +35,27 @@ contract JBVeTokenUriResolver {
     if (_duration <= 0) {
       revert INVALID_DURATION();
     }
-    for (uint256 i = 59; i >= 0; i -= 1) {
-      uint256 maxAmount = uint256(i + 1) * 1000 + (uint256(14 ether).div(10 ether)**i);
-      if (_amount <= maxAmount) {
-        for (uint256 j = uint256(_DURATIONS.length - 1); j >= 0; j -= 1) {
-          if (_DURATIONS[j] == _duration) {
-            return string(abi.encodePacked('ipfs://QmZ95SaBa3VWb2X7o9bPniWKYBQ2uCnjBmhSUhLq7orjRS/', Strings.toString(i * 5 + j)));
-          }
-        }
-        revert INVALID_DURATION();
-      }
+    uint256 bucket = 59;
+    while (bucket >= 0) {
+      uint256 maxAmount = uint256(bucket + 1) * 1000 + (uint256(14 ether).div(10 ether)**bucket);
+      if (_amount >= maxAmount) {
+        bucket += 1;
+        break;
+      } else if (bucket == 0) break;
+      bucket -= 1;
     }
+    if (bucket < 60) {
+      for (uint256 i = uint256(_DURATIONS.length - 1); i >= 0; i -= 1) {
+        if (_DURATIONS[i] == _duration) {
+          return
+            string(
+              //
+              abi.encodePacked('ipfs://QmZ95SaBa3VWb2X7o9bPniWKYBQ2uCnjBmhSUhLq7orjRS/', Strings.toString(bucket * 5 + i))
+              //
+            );
+        }
+      }
+    } else revert INVALID_DURATION();
     revert INSUFFICIENT_BALANCE();
   }
 }

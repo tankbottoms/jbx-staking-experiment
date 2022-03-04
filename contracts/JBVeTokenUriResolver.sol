@@ -28,11 +28,11 @@ contract JBVeTokenUriResolver {
      @param _duration Lock time in seconds.
      Returns metadata url.
     */
-  function tokenURI(uint256 _amount, uint256 _duration) external view returns (string memory uri) {
-    if (_amount > 0) {
+  function tokenURI(uint256 _amount, uint256 _duration) public view returns (string memory uri) {
+    if (_amount <= 0) {
       revert INSUFFICIENT_BALANCE();
     }
-    if (_duration > 0) {
+    if (_duration <= 0) {
       revert INVALID_DURATION();
     }
 
@@ -41,13 +41,7 @@ contract JBVeTokenUriResolver {
       if (_amount <= maxAmount) {
         for (uint8 j = uint8(_DURATIONS.length - 1); j >= 0; j -= 1) {
           if (_DURATIONS[j] == _duration) {
-            return
-              string(
-                abi.encodePacked(
-                  'ipfs://QmZ95SaBa3VWb2X7o9bPniWKYBQ2uCnjBmhSUhLq7orjRS/',
-                  Strings.toString(i * 5 + j)
-                )
-              );
+            return string(abi.encodePacked('ipfs://QmZ95SaBa3VWb2X7o9bPniWKYBQ2uCnjBmhSUhLq7orjRS/', Strings.toString(i * 5 + j)));
           }
         }
         revert INVALID_DURATION();

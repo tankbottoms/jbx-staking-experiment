@@ -12,7 +12,7 @@ async function deploy(contractName: string, ...args: any[]) {
   const [signer] = await ethers.getSigners();
   const UriResolverFactory = await ethers.getContractFactory(contractName, signer);
   const contract = await UriResolverFactory.deploy();
-  console.log(`${contractName} => address ${contract.address}`);
+  console.log(`${contractName} => ${contract.address}`);
   console.log(`waiting for 5 confirmations [0/5]`);
   await contract.deployTransaction.wait(1);
   console.log(`waiting for 5 confirmations [1/5]`);
@@ -32,7 +32,7 @@ async function deploy(contractName: string, ...args: any[]) {
     });
   } catch (error: any) {
     console.log(`contract verification failed`);
-    console.log(`Error: ${error?.message?.slice(0, 100)}`);
+    console.log(`Error: ${error?.message}`);
   }
 
   return contract;

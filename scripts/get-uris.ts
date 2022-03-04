@@ -25,7 +25,7 @@ async function main() {
         gasLimit: BigNumber.from('210000'),
       });
       if (typeof uri === 'string') {
-        console.log(`AMOUNT[${start} - ${Number(next) - 1}]`.green, `DURATION[${duration}]\t`.blue, uri.yellow);
+        console.log(`AMOUNT[${start} - ${Number(next) - 1}]`.green.padEnd(40, ' '), `DURATION[${duration}]`.blue.padEnd(22, ' '), '\t', uri.yellow);
       } else {
         console.log(uri);
         throw Error('INVALID Response');

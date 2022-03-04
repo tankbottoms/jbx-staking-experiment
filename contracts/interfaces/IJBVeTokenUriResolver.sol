@@ -3,8 +3,7 @@ pragma solidity 0.8.6;
 
 interface IJBVeTokenUriResolver {
   /**
-     @notice 
-     Computes the metadata url.
+     @notice Computes the metadata url.
      @param _tokenId TokenId of the Banny
      @param _amount Lock Amount.
      @param _duration Lock time in seconds.

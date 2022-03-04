@@ -37,7 +37,7 @@ contract JBVeTokenUriResolver {
     }
     uint256 bucket = 59;
     while (bucket >= 0) {
-      uint256 maxAmount = uint256(bucket + 1) * 1000 + (uint256(14 ether).div(10 ether)**bucket);
+      uint256 maxAmount = uint256(bucket + 1) * 1000 + uint256(14**bucket).div(10**bucket);
       if (_amount >= maxAmount) {
         bucket += 1;
         break;

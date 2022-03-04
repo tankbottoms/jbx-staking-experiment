@@ -38,7 +38,7 @@ library JBConstants {
   /**
     @notice A thousand days in seconds.
   */
-  uint256 public constant ONE_THOUSAND_DAYS = 8640000;
+  uint256 public constant ONE_THOUSAND_DAYS = 86400000;
 
   /**
     @notice Two hundred and fifty days in seconds

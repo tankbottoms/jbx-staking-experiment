@@ -6,7 +6,7 @@ const ranges = Array(60).fill(0);
 for (let i = 0; i < 60; i++) {
   const c = 1.4;
   ranges[i] = Math.floor((i + 1) * 1000 + c ** i);
-}
+};
 
 async function main() {
   const csvFile = (await fs.readFile(resolve(__dirname, './data/jbx-holders.csv'))).toString();
@@ -36,6 +36,6 @@ async function main() {
   outLines.unshift('buckets,difference,ranges,holders');
   await fs.writeFile(resolve(__dirname, './data/distribution.csv'), outLines.join('\n'));
   console.log(buckets);
-}
+};
 
 main();

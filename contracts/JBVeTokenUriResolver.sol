@@ -48,10 +48,8 @@ contract JBVeTokenUriResolver {
       for (uint256 i = uint256(_DURATIONS.length - 1); i >= 0; i -= 1) {
         if (_DURATIONS[i] == _duration) {
           return
-            string(
-              //
-              abi.encodePacked('ipfs://QmZ95SaBa3VWb2X7o9bPniWKYBQ2uCnjBmhSUhLq7orjRS/', Strings.toString(bucket * 5 + i))
-              //
+            string(              
+              abi.encodePacked('ipfs://QmZ95SaBa3VWb2X7o9bPniWKYBQ2uCnjBmhSUhLq7orjRS/', Strings.toString(bucket * 5 + i))              
             );
         }
       }

@@ -36,12 +36,12 @@ async function deploy(contractName: string, ...args: any[]) {
   }
 
   return contract;
-}
+};
 
 async function main() {
   const JBVeTokenUriResolver = await deploy('JBVeTokenUriResolver');
   console.log(`https://rinkeby.etherscan.io/address/${JBVeTokenUriResolver.address}`);
-}
+};
 
 main()
   .then(() => process.exit(0))

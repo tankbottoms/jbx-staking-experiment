@@ -7,8 +7,7 @@ import art from '../artifacts/contracts/JBVeTokenUriResolver.sol/JBVeTokenUriRes
 
 async function main() {
   const [signer] = await ethers.getSigners();
-  const contract = new Contract('0x3E7558A217D0bE9BBD32E5F8a1aa65e0E3138C54', art.abi, signer);
-
+  const contract = new Contract('0x6F946defCEEa54711eFF5b589961Ee21D59a9CBa', art.abi, signer);
   const csvFile = (await fs.readFile(resolve(__dirname, './data/distribution.csv'))).toString();
   const lines = csvFile
     .split('\n')

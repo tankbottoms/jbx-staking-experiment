@@ -1,12 +1,31 @@
 import { promises as fs } from 'fs';
 import { resolve } from 'path';
 
+function getRandomInt(max: number) {
+  let result = Math.floor(Math.random() * max);
+  if (result !== 0) return result;
+  return 1;
+};
+
 const ranges = Array(60).fill(0);
 
-for (let i = 0; i < 60; i++) {
-  const c = 1.4;
-  ranges[i] = Math.floor((i + 1) * 1000 + c ** i);
+for (let i = 0; i < 60; i++) {  
+  // ranges[i] = getRandomInt(60);
+  getRandomInt(60)
 };
+
+console.log(ranges);
+
+for (let i = 0; i < 60; i++) {  
+  let a = ranges[i] - 4;
+  let b = a * 5;
+  console.log(`${ranges[i]}`)  
+  ranges[i] = b;
+};
+
+console.log(ranges);
+
+
 
 async function main() {
   const csvFile = (await fs.readFile(resolve(__dirname, './data/jbx-holders.csv'))).toString();
@@ -38,4 +57,4 @@ async function main() {
   console.log(buckets);
 };
 
-main();
+false && main();

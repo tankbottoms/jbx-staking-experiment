@@ -10,19 +10,12 @@ import './JBErrors.sol';
 contract JBVeTokenUriResolver {
   using SafeMath for uint256;
 
-  uint256[] private _DURATIONS = [
-    uint256(JBConstants.TEN_DAYS),
-    uint256(JBConstants.TWENTY_FIVE_DAYS),
-    uint256(JBConstants.ONE_HUNDRED_DAYS),
-    uint256(JBConstants.TWO_HUNDRED_FIFTY_DAYS),
-    uint256(JBConstants.ONE_THOUSAND_DAYS)
-  ];
-
   /**
-     @notice Returns the token range Banny slot
-     @param _amount Locked Amount.     
+     @notice Returns the veBanny character index needed to compute the righteous veBanny on IPFS.
+     @param _amount Amount of locked Juicebox.     
+     The range values referenced below were gleaned from the following Notion URL. 
      https://www.notion.so/juicebox/veBanny-proposal-from-Jango-2-68c6f578bef84205a9f87e3f1057aa37
-     Returns Banny slot.
+     Returns the token range index or veBanny character commensurate with amount of locked Juicebox.
   */
   function getTokenRange(uint256 _amount) public pure returns (uint256) {
     if (_amount <= 0) {
@@ -156,34 +149,47 @@ contract JBVeTokenUriResolver {
   }
 
   /**
-     @notice Computes the metadata url.
-     @param _amount Lock Amount.
-     @param _duration Lock time in seconds.
-     Returns metadata url.
+     @notice Returns the token duration multiplier needed to index into the righteous veBanny mediallion background.
+     @param _duration Time in seconds corresponding with one of five acceptable staking durations. 
+     The Staking durations below were gleaned from the JBveBanny.sol contract line 55-59.
+     Returns the duration multiplier used to index into the proper veBanny mediallion on IPFS.
+  */
+  function getTokenDuration(uint256 _duration) public pure returns (uint256) {
+    if (_duration <= 0) {
+      revert INVALID_DURATION();
+    }
+    uint16 _stakeMultiplier = 0;
+    if (uint256(JBConstants.TEN_DAYS) == _duration) {
+      _stakeMultiplier = 1;
+    } else if (uint256(JBConstants.TWENTY_FIVE_DAYS) == _duration) {
+      _stakeMultiplier = 2;
+    } else if (uint256(JBConstants.ONE_HUNDRED_DAYS) == _duration) {
+      _stakeMultiplier = 3;
+    } else if (uint256(JBConstants.TWO_HUNDRED_FIFTY_DAYS) == _duration) {
+      _stakeMultiplier = 4;
+    } else if (uint256(JBConstants.ONE_THOUSAND_DAYS) == _duration) {
+      _stakeMultiplier = 5;
+    } else {
+      revert INVALID_DURATION();
+    }
+    return _stakeMultiplier;
+  }
+
+  /**
+     @notice Computes the specific veBanny IPFS URI  based on the above locked Juicebox token range index and the duration multiplier.
+     @param _amount Amount of locked Juicebox. 
+     @param _duration Duration in seconds to stake Juicebox.
+     Returns one of the epic and totally righteous veBanny character IPFS URI the user is entitled to with the aforementioned parameters.
     */
-  function tokenURI(uint256 _amount, uint256 _duration) public view returns (string memory uri) {
+  function tokenURI(uint256 _amount, uint256 _duration) public pure returns (string memory uri) {
     if (_amount <= 0) {
       revert INSUFFICIENT_BALANCE();
     }
     if (_duration <= 0) {
       revert INVALID_DURATION();
     }
-    uint256 bucket = 59;
-    while (bucket >= 0) {
-      uint256 maxAmount = uint256(bucket + 1) * 1000 + uint256(14**bucket).div(10**bucket);
-      if (_amount >= maxAmount) {
-        bucket += 1;
-        break;
-      } else if (bucket == 0) break;
-      bucket -= 1;
-    }
-    if (bucket < 60) {
-      for (uint256 i = uint256(_DURATIONS.length - 1); i >= 0; i -= 1) {
-        if (_DURATIONS[i] == _duration) {
-          return string(abi.encodePacked('ipfs://QmZ95SaBa3VWb2X7o9bPniWKYBQ2uCnjBmhSUhLq7orjRS/', Strings.toString(bucket * 5 + i)));
-        }
-      }
-    } else revert INVALID_DURATION();
-    revert INSUFFICIENT_BALANCE();
+    uint256 _tokenRange = getTokenRange(_amount);
+    uint256 _stakeMultiplier = getTokenDuration(_duration);
+    return string(abi.encodePacked('ipfs://QmZ95SaBa3VWb2X7o9bPniWKYBQ2uCnjBmhSUhLq7orjRS/', Strings.toString(_tokenRange * _stakeMultiplier)));
   }
 }

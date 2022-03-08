@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import { resolve } from 'path';
-
+/*
 function getRandomInt(max: number) {
   let result = Math.floor(Math.random() * max);
   if (result !== 0) return result;
@@ -24,9 +24,7 @@ for (let i = 0; i < 60; i++) {
 };
 
 console.log(ranges);
-
-
-
+*/
 async function main() {
   const csvFile = (await fs.readFile(resolve(__dirname, './data/jbx-holders.csv'))).toString();
   //Wallet address,Total JBX balance,Staked balance,Unstaked balance,Total ETH paid,Last paid timestamp

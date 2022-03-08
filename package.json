@@ -53,6 +53,7 @@
     "test-uris": "npx hardhat run scripts/get-uris.ts --network rinkeby",
     "clean": "rimraf ./cache && rimraf ./artifacts",
     "compile": "yarn clean && hardhat compile",
-    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
+    "deploy:rinkeby": "npx hardhat run scripts/deploy.ts --network rinkeby"
   }
 }
